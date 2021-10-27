@@ -24,3 +24,4 @@ const client = new ClientAPI({
 
 require('./Modules/Uptime.js')(client);
 require('./Modules/CHandler.js')(client);
+require('./Modules/EHandler.js')(client);

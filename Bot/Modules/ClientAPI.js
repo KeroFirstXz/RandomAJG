@@ -2,11 +2,13 @@ const Discord = require('discord.js')
 const { Client } = Discord;
 const { Player } = require('discord-player');
 const fs = require('fs')
+const db = require('quick.db')
 
 class ClientAPI extends Client {
   constructor(options) {
     super(options);
     this.config = require('../Data/Config.js')
+    this.dj = new db.table("DJData")
     this.aliases = new Discord.Collection()
     this.commands = new Discord.Collection()
     this.category = fs.readdirSync('./Bot/Commands/')

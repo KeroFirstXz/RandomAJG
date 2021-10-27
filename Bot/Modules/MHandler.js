@@ -10,20 +10,23 @@ module.exports = client => {
   });
 
   client.player.on("trackStart", (queue, track) => {
-    let squeue = client.player.getQueue(queue.mes.guild.id);
     if (!client.config.opt.loopMessage && queue.repeatMode !== 0) return;
     queue.metadata.send(
-      `**Playing** 🎶 \`${track.title}\` - Now!, Volume: \`${squeue.volume}%\``
-    );
+      `**Playing** 🎶 \`${track.title}\` - Now!, Volume: \`100%\``
+    ).catch(e => {
+      console.log(e.message)
+    })
   });
 
   client.player.on("trackAdd", (queue, track) => {
     var queueembed = new Discord.MessageEmbed()
-      .setAuthor(`Added to queue`, queue.mes.author.avatarURL)
+      .setAuthor(`Added to queue`)
       .setThumbnail(`https://i.ytimg.com/vi/${track.id}/default.jpg?width=80&height=60`)
       .setDescription(`**[${track.title}](${track.url})**`)
       .addField("Song Duration", `${track.duration}`, true)
-    queue.metadata.send({ embeds: [queueembed] });
+    queue.metadata.send({ embeds: [queueembed] }).catch(e => {
+      console.log(e.message)
+    })
   });
 
   client.player.on("botDisconnect", queue => {
